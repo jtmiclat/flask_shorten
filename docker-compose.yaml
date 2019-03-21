@@ -1,0 +1,37 @@
+version: '3'
+services:
+    postgres:
+        image: postgres:latest
+        container_name: postgres
+        environment:
+            POSTGRES_PASSWORD: password
+        ports:
+            - "5432:5432"
+        volumes:
+            - pg-data:/var/lib/postgresql/data
+        networks:
+          - flask_shortener
+
+    flask_shortener:
+        restart: always
+        volumes:
+            - ./:/flask_shortener
+        build:
+            context: .
+        ports:
+            - "5000:5000"
+        environment:
+            SQLALCHEMY_DATABASE_URI: 'postgresql+psycopg2://postgres:password@postgres/postgres'
+        depends_on:
+            - postgres
+        links:
+            - postgres
+        networks:
+            - flask_shortener
+
+volumes:
+    pg-data:
+        driver: local
+
+networks:
+    flask_shortener:
