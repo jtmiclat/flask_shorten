@@ -85,3 +85,7 @@ class Redirection(MethodView):
         if result is None:
             abort(404, message="No url found for path %s" % path)
         return redirect(result.url)
+
+class HealthCheck(MethodView):
+    def get(self):
+        return "Health Check of flask shortener"
