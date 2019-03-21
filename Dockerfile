@@ -8,13 +8,13 @@ RUN pip install poetry
 
 RUN poetry config settings.virtualenvs.create false
 
-WORKDIR /flask_shortener
+WORKDIR /flask_shorten
 
 COPY poetry.lock .
 COPY pyproject.toml .
 
 RUN poetry install -n --no-dev
-COPY . /flask_shortener
+COPY . /flask_shorten
 
 
 

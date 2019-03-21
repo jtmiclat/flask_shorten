@@ -88,4 +88,4 @@ class Redirection(MethodView):
 
 class HealthCheck(MethodView):
     def get(self):
-        return "Health Check of flask shortener"
+        return "Health Check of flask shorten"

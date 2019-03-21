@@ -1,4 +1,4 @@
-from flask_shortener import create_app
+from flask_shorten import create_app
 
 app = create_app()
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "flask_shortener"
+name = "flask_shorten"
 version = "0.1.0"
 description = "An example flask app that handles url shortening"
 authors = ["Jt Miclat <jtmiclat@gmail.com>"]

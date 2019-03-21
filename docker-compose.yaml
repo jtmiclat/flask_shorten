@@ -10,12 +10,12 @@ services:
         volumes:
             - pg-data:/var/lib/postgresql/data
         networks:
-          - flask_shortener
+          - flask_shorten
 
-    flask_shortener:
+    flask_shorten:
         restart: always
         volumes:
-            - ./:/flask_shortener
+            - ./:/flask_shorten
         build:
             context: .
         ports:
@@ -27,11 +27,11 @@ services:
         links:
             - postgres
         networks:
-            - flask_shortener
+            - flask_shorten
 
 volumes:
     pg-data:
         driver: local
 
 networks:
-    flask_shortener:
+    flask_shorten:

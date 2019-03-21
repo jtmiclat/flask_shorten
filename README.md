@@ -1,10 +1,9 @@
 # An example of a Flask Url Shortener
 
 ## TODO
+
 [ ] Deploy this to digital ocean via kubernetes or kubeless
-[ ] Have proper Serialization via Marshmallow and webargs
 [ ] Bunch of tests
-[ ] Custom endpoints
 [ ] Add documentation
 
 ## Quick Start Guide
