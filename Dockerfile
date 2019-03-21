@@ -6,7 +6,6 @@ MAINTAINER Jt Miclat
 RUN pip install --upgrade pip
 RUN pip install poetry
 
-RUN poetry config settings.virtualenvs.create false
 
 WORKDIR /flask_shorten
 
@@ -15,8 +14,3 @@ COPY pyproject.toml .
 
 RUN poetry install -n --no-dev
 COPY . /flask_shorten
-
-
-
-ENTRYPOINT ["python", "run.py"]
-
