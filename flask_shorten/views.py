@@ -1,5 +1,5 @@
 from flask.views import MethodView
-from flask import request, jsonify, redirect
+from flask import request, redirect, send_from_directory
 from sqlalchemy import func
 from marshmallow import Schema, fields, validate
 from flask_rest_api import Api, Blueprint, abort
@@ -86,6 +86,7 @@ class Redirection(MethodView):
             abort(404, message="No url found for path %s" % path)
         return redirect(result.url)
 
-class HealthCheck(MethodView):
+class HomePage(MethodView):
     def get(self):
-        return "Health Check of flask shorten"
+        return send_from_directory("static", "homepage.html")
+        

@@ -14,3 +14,4 @@ COPY pyproject.toml .
 
 RUN poetry install -n --no-dev
 COPY . /flask_shorten
+CMD ["poetry", "run", "python", "run.py"]

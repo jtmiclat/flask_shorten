@@ -1,0 +1,141 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.min.css">
+<style>
+    .markdown-body {
+        box-sizing: border-box;
+        min-width: 200px;
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 45px;
+    }
+
+    @media (max-width: 767px) {
+        .markdown-body {
+            padding: 15px;
+        }
+    }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+<article class="markdown-body">
+    <h1>Flask Shorten</h1>
+    <p>A super simple flask app that creates exposes a RestAPI for generating shorten links</p>
+    <h2>GUI</h2>
+    <div class="field">
+        <label class="label">Generate link</label>
+        <div class="control">
+            <input id="url" class="input" type="text" placeholder="URL">
+        </div>
+
+    </div>
+    <div class="field">
+        <div class="control">
+            <input id="custom_path" class="input" type="text" placeholder="Custom path (Optional)">
+        </div>
+    </div>
+    <div id="submit" class="control">
+        <button class="button is-primary">Submit</button>
+    </div>
+    <br />
+    <div id="message" class="message is-success">
+    </div>
+
+    <h2>Usage</h2>
+    Generating a random url.
+    <pre><code>
+        curl -X POST \
+            http://link.jtmiclat.me/url/ \
+            -H 'Content-Type: application/json' \
+            -d '{"url": "http://google.com"}'
+        # {
+        #     "path": "UL35kEMC",
+        #     "url": "http://google.com"
+        # }
+    </code></pre>
+    Checking if the path generated actually forwarded
+    <pre><code>
+        curl -i -X GET http://link.jtmiclat.me/UL35kEMC  | grep Location
+        # Location: http://google.com
+    </code></pre>
+
+    You can preset the urls by passing custom_path field in the json body
+    <pre><code>
+        curl -X POST \
+            http://link.jtmiclat.me/url/ \
+            -H 'Content-Type: application/json' \
+            -d '{"url": "http://github.com", "custom_path": "GitHub"}'
+        # {
+        #     "path": "Github",
+        #     "url": "http://github.com"
+        # }
+    </code></pre>
+    <pre><code>
+        curl -i -X GET http://link.jtmiclat.me/GitHub  | grep Location
+        # Location: http://github.com
+    </code></pre>
+    <h2>Code</h2>
+    Code can be found <a href="https://github.com/jtmiclat/flask_shorten">here</a>
+    <h2>Warnings</h2>
+    This website was meant as an example on how deploy the app and not be used
+    as a real service. I cannot gurantee it will always work.
+</article>
+<script type="text/javascript">
+    function payload(url, custom_path) {
+        let p = { "url": url }
+        if (custom_path !== "") {
+            p["custom_path"] = custom_path
+        }
+        return {
+            "async": true,
+            "crossDomain": true,
+            "url": "/url/",
+            "method": "POST",
+            "headers": {
+                "Content-Type": "application/json",
+                "cache-control": "no-cache",
+                "Postman-Token": "d22c2f9a-5fe2-4461-abe5-3cabf0da61ff"
+            },
+            "processData": false,
+            "data": JSON.stringify(p),
+            "success": success_message,
+            "error": error_message
+        }
+    }
+    function submit() {
+        let url = $("#url").val()
+        let custom_path = $("#custom_path").val()
+        $.ajax(payload(url, custom_path))
+    }
+    function success_message(data, textStatus) {
+        let message = `<p>Successfully created a link for ${data.url} \n
+        Link created is : <a href="/${data.path}">${window.location.origin}/${data.path}</a></p>`
+        $("#message").empty()
+        $("#message").removeClass().addClass("message").addClass("is-success")
+        $("#message").append(`<div class='message-body'>${message}</div>`)
+    }
+    function error_message(data, textStatus) {
+        let response = data.responseJSON
+        console.log(response)
+        let m
+        if ("message" in response) {
+            m = response.message
+        } else if ("errors" in response) {
+            m = ""
+            for (key in response.errors) {
+                console.log(key)
+                m += `${key}: ${response.errors[key].join('\n')}`
+            }
+
+        } else {
+            let m = "Something somewhere whent wrong"
+        }
+        $("#message").empty()
+        $("#message").removeClass().addClass("message").addClass("is-danger")
+        $("#message").append(`<div class='message-body'>${m}</div>`)
+    }
+    $(document).ready(function () {
+        $("#submit").on("click", function () { submit() })
+    })
+
+</script>

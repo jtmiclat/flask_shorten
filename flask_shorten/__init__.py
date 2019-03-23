@@ -19,7 +19,7 @@ def create_app():
     app = Flask(__name__)
     db.init_app(app)
     set_config(app)
-    from .views import UrlMapping, Redirection, HealthCheck, api, url_bp
+    from .views import UrlMapping, Redirection, HomePage, api, url_bp
 
     api.init_app(app)
     api.register_blueprint(url_bp)
@@ -27,6 +27,6 @@ def create_app():
         "/<path:path>", view_func=Redirection.as_view("redirection")
     )
     app.add_url_rule(
-        "/", view_func=HealthCheck.as_view("HealthCheck")
+        "/", view_func=HomePage.as_view("HomePage")
     )
     return app

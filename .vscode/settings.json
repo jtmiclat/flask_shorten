@@ -1,5 +1,0 @@
-{
-    "python.pythonPath": "/home/jt/.cache/pypoetry/virtualenvs/flask-shortener-py3.7/bin/python",
-    "python.linting.flake8Enabled": true,
-    "python.linting.enabled": true
-}

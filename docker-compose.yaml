@@ -14,6 +14,7 @@ services:
 
     flask_shorten:
         restart: always
+        command: poetry run python run.py
         volumes:
             - ./:/flask_shorten
         build:
