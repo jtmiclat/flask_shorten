@@ -2,8 +2,8 @@
 
 ## TODO
 
-[ ] Set up Azure Pipeline
-[ ] Add more documentation
+- [ ] Set up Azure Pipeline
+- [ ] Add more documentation
 
 ## Quick Start Guide
 Posting a auto generate a code
