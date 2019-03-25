@@ -2,9 +2,8 @@
 
 ## TODO
 
-[ ] Deploy this to digital ocean via kubernetes or kubeless
-[ ] Bunch of tests
-[ ] Add documentation
+[ ] Set up Azure Pipeline
+[ ] Add more documentation
 
 ## Quick Start Guide
 Posting a auto generate a code

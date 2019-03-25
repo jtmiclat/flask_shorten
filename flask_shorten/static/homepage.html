@@ -1,5 +1,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.min.css">
 <style>
     .markdown-body {
         box-sizing: border-box;
@@ -15,13 +16,12 @@
         }
     }
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
-<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+<script defer src="//use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
 <article class="markdown-body">
     <h1>Flask Shorten</h1>
-    <p>A super simple flask app that creates exposes a RestAPI for generating shorten links</p>
-    <h2>GUI</h2>
+    <p>A super simple flask app that exposes a RestAPI for generating shorten url links</p>
+    <h2>Basic Interface Example</h2>
     <div class="field">
         <label class="label">Generate link</label>
         <div class="control">
@@ -41,7 +41,7 @@
     <div id="message" class="message is-success">
     </div>
 
-    <h2>Usage</h2>
+    <h2>Low Level Usage</h2>
     Generating a random url.
     <pre><code>
         curl -X POST \
@@ -75,10 +75,11 @@
         # Location: http://github.com
     </code></pre>
     <h2>Code</h2>
-    Code can be found <a href="https://github.com/jtmiclat/flask_shorten">here</a>
-    <h2>Warnings</h2>
+    Code can be found <a href="//github.com/jtmiclat/flask_shorten">here</a>
+    <h2>Warning</h2>
     This website was meant as an example on how deploy the app and not be used
-    as a real service. I cannot gurantee it will always work.
+    as a real service. I do not guarantee that the data will always be persisted
+    and be accurate.
 </article>
 <script type="text/javascript">
     function payload(url, custom_path) {
@@ -108,8 +109,8 @@
         $.ajax(payload(url, custom_path))
     }
     function success_message(data, textStatus) {
-        let message = `<p>Successfully created a link for ${data.url} \n
-        Link created is : <a href="/${data.path}">${window.location.origin}/${data.path}</a></p>`
+        let message = `<p>Successfully created a link for ${data.url}.</p> \n
+        <p>Link created is : <a style="color: #0366d6" href="/${data.path}">${window.location.origin}/${data.path}</a></p>`
         $("#message").empty()
         $("#message").removeClass().addClass("message").addClass("is-success")
         $("#message").append(`<div class='message-body'>${message}</div>`)

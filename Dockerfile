@@ -1,8 +1,9 @@
 FROM python:3.7-slim
-MAINTAINER Jt Miclat
+
+LABEL maintainer="Jt Miclat jtmiclat@pez.ai"
 
 
-# Start Installing the Basic Dependencies
+# Start Basic Dependencies
 RUN pip install --upgrade pip
 RUN pip install poetry
 
