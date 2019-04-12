@@ -10,6 +10,7 @@ db = SQLAlchemy()
 
 
 class UrlMapper(db.Model):
+    """URL Mapper"""
     __tablename__ = "url_mapper"
     id = db.Column("id", db.Integer, primary_key=True)
     url = db.Column("url", db.String, nullable=False)
@@ -21,15 +22,18 @@ class UrlMapper(db.Model):
 
     @staticmethod
     def generate_hash_path():
+        """Generates a hash ussing UUID
+
+        WARNING: There is a chance that hash will be repeated especially since
+        UUID is only 8 characters long
+        """
         return ShortUUID().random(HASH_LENGTH)
 
-
-"""
-class UrlUses(db.Model):
-    id = db.Column("id", db.Integer, primary_key=True)
-    cookies = db.Column("cookies", db.String)
-    headers = db.Column("headers", db.JSON)
-    timestamp = db.Column(
-        "created_on", db.DateTime, nullable=False, default=datetime.utcnow
-    )
-"""
+# TODO: Table for Url Uses
+# class UrlUse(db.Model):
+#     id = db.Column("id", db.Integer, primary_key=True)
+#     cookies = db.Column("cookies", db.String)
+#     headers = db.Column("headers", db.JSON)
+#     timestamp = db.Column(
+#         "created_on", db.DateTime, nullable=False, default=datetime.utcnow
+#     )

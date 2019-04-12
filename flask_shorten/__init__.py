@@ -3,6 +3,10 @@ from flask import Flask
 from .models import db
 
 def set_config(app):
+    """Set up config
+
+    TODO: Move this to an config class 
+    """
     app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv(
         "SQLALCHEMY_DATABASE_URI"
     )
@@ -16,6 +20,7 @@ def set_config(app):
 
 
 def create_app():
+    """Create app """
     app = Flask(__name__)
     db.init_app(app)
     set_config(app)

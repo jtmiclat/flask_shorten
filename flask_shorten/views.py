@@ -8,11 +8,15 @@ api = Api()
 
 from .models import UrlMapper, db
 
-url_bp = Blueprint("url", "url", url_prefix="/url", description="???")
+url_bp = Blueprint(
+    "url", "url", url_prefix="/url", description="Url Mapping Api"
+)
 
 
 @api.definition("UrlMappingRequest")
 class UrlMappingRequest(Schema):
+    """Schema for generating of url mapping"""
+
     class Meta:
         strict = True
 
@@ -31,6 +35,8 @@ class UrlMappingRequest(Schema):
 
 @api.definition("UrlMappingResponse")
 class UrlMappingResponse(Schema):
+    """Schema for response of url mapping"""
+
     class Meta:
         strict = True
 
@@ -40,14 +46,20 @@ class UrlMappingResponse(Schema):
 
 @api.definition("UrlMappingQuery")
 class UrlMappingQuery(Schema):
+    """Schema for querying url mappings."""
+
     class Meta:
         strict = True
 
     path = fields.String(required=True)
 
 
-def create_url_mapper(url, path=None):
-    # Make sure no duplicates
+def create_url_mapper(url: str, path: str = None) -> UrlMapper:
+    """Creates a new url based on path.
+    
+    If path is none, generates random hash. 
+    Raises an abort if path already exists in database
+    """
     custom = True
     if not path:
         custom = False
@@ -55,7 +67,7 @@ def create_url_mapper(url, path=None):
 
     url_mapper = UrlMapper.query.filter_by(path=path).one_or_none()
     if url_mapper is not None:
-        abort(409, message="That path is already taken in use" )
+        abort(409, message="That path is already taken in use")
     url_mapper = UrlMapper(url=url, path=path, custom=custom)
     db.session.add(url_mapper)
     db.session.commit()
@@ -64,6 +76,8 @@ def create_url_mapper(url, path=None):
 
 @url_bp.route("/")
 class UrlMapping(MethodView):
+    """Resource for generating new url endpoints"""
+
     @url_bp.arguments(UrlMappingQuery, location="query")
     @url_bp.response(UrlMappingResponse)
     def get(self, args):
@@ -80,13 +94,21 @@ class UrlMapping(MethodView):
 
 
 class Redirection(MethodView):
+    """Redirect to appropriate endpoint.
+
+    TODO:
+    - Record incoming headers and cookies then store them in a database
+    """
+
     def get(self, path):
         result = UrlMapper.query.filter_by(path=path).one_or_none()
         if result is None:
             abort(404, message="No url found for path %s" % path)
         return redirect(result.url)
 
+
 class HomePage(MethodView):
+    """Deploy homepage html"""
+
     def get(self):
         return send_from_directory("static", "homepage.html")
-        

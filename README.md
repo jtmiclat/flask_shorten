@@ -1,9 +1,16 @@
 # An example of a Flask Url Shortener
 
-## TODO
+## Deployed example
 
-- [ ] Set up Azure Pipeline
-- [ ] Add more documentation
+This app is deployed in Digital Ocean. App can be located at [here](https://link.jtmiclat.me/). The website was meant as an example on how deploy the app and not be used as a real service. I do not guarantee that the data will always be persisted and be accurate.
+
+## Design decisions
+
+Used postgres as an easy to use database but it might better to use something
+like redis or document models for faster lookup.
+
+Used `flask-rest-api` as it is my preferred choice for creating simple RESTApis.
+
 
 ## Quick Start Guide
 Posting a auto generate a code
@@ -29,3 +36,7 @@ Redirects to
 <h1>Redirecting...</h1>
 <p>You should be redirected automatically to target URL: <a href="http://jtmiclat.com">http://jtmiclat.com</a>.  If not click the link
 ```
+
+## TODO
+
+- [ ] Set up Azure Pipeline
