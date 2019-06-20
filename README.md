@@ -1,4 +1,5 @@
 # An example of a Flask Url Shortener
+![build](https://gitlab.com/jtcmic/flask_shorten/badges/master/pipeline.svg)
 
 ## Deployed example
 
