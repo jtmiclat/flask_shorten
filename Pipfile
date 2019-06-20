@@ -3,7 +3,7 @@ name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
 
-[dev-packages]
+[packages]
 flask = "==1.0"
 flask-sqlalchemy = "==2.4.0"
 psycopg2-binary = "==2.8.3"
@@ -12,11 +12,10 @@ flask-rest-api = "==0.14.0"
 shortuuid = "==0.5.0"
 gunicorn = "==19.9"
 
-[packages]
+[dev-packages]
 pytest = "*"
 ipython = "*"
 flask-shell-ipython = "*"
-jinja2 = "==2.10.1"
 
 [requires]
 python_version = "3.7"

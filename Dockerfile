@@ -1,6 +1,6 @@
 FROM python:3.7-slim
 
-LABEL maintainer="Jt Miclat jtmiclat@pez.ai"
+LABEL maintainer="Jt Miclat jtmiclat@gmail"
 
 ARG PIPENV_ARGS=""
 
