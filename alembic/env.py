@@ -33,7 +33,9 @@ postgres_database = os.getenv("POSTGRES_DATABASE")
 postgres_service = os.getenv("POSTGRES_SERVICE")
 if postgres_password and postgres_password and postgres_service and postgres_user:
     uri = f"postgresql+psycopg2://{postgres_user}:{postgres_password}@{postgres_service}/{postgres_database}"
-config.set_main_option('sqlalchemy.url', uri)
+config.set_main_option("sqlalchemy.url", uri)
+
+
 def run_migrations_offline():
     """Run migrations in 'offline' mode.
 
@@ -47,9 +49,7 @@ def run_migrations_offline():
 
     """
     url = config.get_main_option("sqlalchemy.url")
-    context.configure(
-        url=url, target_metadata=target_metadata, literal_binds=True
-    )
+    context.configure(url=url, target_metadata=target_metadata, literal_binds=True)
 
     with context.begin_transaction():
         context.run_migrations()
@@ -69,9 +69,7 @@ def run_migrations_online():
     )
 
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection, target_metadata=target_metadata
-        )
+        context.configure(connection=connection, target_metadata=target_metadata)
 
         with context.begin_transaction():
             context.run_migrations()

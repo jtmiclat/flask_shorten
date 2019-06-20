@@ -2,6 +2,7 @@ import os
 import logging
 
 from flask import Flask
+
 from .models import db
 
 logger = logging.getLogger(__name__)

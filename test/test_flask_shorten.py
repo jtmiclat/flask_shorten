@@ -24,8 +24,7 @@ def database(app):
 def test_custom_path_creation(app, database):
     client = app.test_client()
     client.post(
-        "/url/",
-        json={"url": "http://localhost.dev", "custom_path": "localhost"},
+        "/url/", json={"url": "http://localhost.dev", "custom_path": "localhost"}
     )
     a = client.get("/localhost")
     assert a.status_code == 302
@@ -34,9 +33,7 @@ def test_custom_path_creation(app, database):
 
 def test_random_path_creation(database, app, monkeypatch):
     client = app.test_client()
-    monkeypatch.setattr(
-        UrlMapper, "generate_hash_path", lambda: "randomstring"
-    )
+    monkeypatch.setattr(UrlMapper, "generate_hash_path", lambda: "randomstring")
     client.post("/url/", json={"url": "http://localhosting.dev"})
     a = client.get("/randomstring")
     assert a.status_code == 302
@@ -46,12 +43,10 @@ def test_random_path_creation(database, app, monkeypatch):
 def test_taken_path(app, database, monkeypatch):
     client = app.test_client()
     client.post(
-        "/url/",
-        json={"url": "http://localhost.dev", "custom_path": "localhost"},
+        "/url/", json={"url": "http://localhost.dev", "custom_path": "localhost"}
     )
     a = client.post(
-        "/url/",
-        json={"url": "http://localhost.dev", "custom_path": "localhost"},
+        "/url/", json={"url": "http://localhost.dev", "custom_path": "localhost"}
     )
     assert a.status_code == 409
 

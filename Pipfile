@@ -16,6 +16,7 @@ gunicorn = "==19.9"
 pytest = "*"
 ipython = "*"
 flask-shell-ipython = "*"
+jinja2 = "==2.10.1"
 
 [requires]
 python_version = "3.7"
