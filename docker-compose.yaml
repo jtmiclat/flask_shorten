@@ -13,12 +13,13 @@ services:
           - flask_shorten
 
     flask_shorten:
-        restart: always
-        command: poetry run gunicorn -w 4 -b 0.0.0.0:5000 run:app --access-logfile - # python run.py
+        command: gunicorn -w 4 -b 0.0.0.0:5000 run:app --access-logfile - # python run.py
         volumes:
             - ./:/flask_shorten
         build:
             context: .
+            args:
+                PIPENV_ARGS: '--dev'
         ports:
             - "5000:5000"
         environment:

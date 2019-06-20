@@ -2,17 +2,14 @@ FROM python:3.7-slim
 
 LABEL maintainer="Jt Miclat jtmiclat@pez.ai"
 
+ARG PIPENV_ARGS=""
 
-# Start Basic Dependencies
 RUN pip install --upgrade pip
-RUN pip install poetry
+RUN pip install pipenv
 
 
 WORKDIR /flask_shorten
 
-COPY poetry.lock .
-COPY pyproject.toml .
-
-RUN poetry install -n --no-dev
 COPY . /flask_shorten
-CMD ["poetry", "run", "gunicorn", "-w", "2", "-b", "0.0.0.0:5000", "run:app", "--access-logfile", "-"]
+RUN pipenv install --system --deploy  ${PIPENV_ARGS}
+CMD ["gunicorn", "-w", "2", "-b", "0.0.0.0:5000", "run:app", "--access-logfile", "-"]

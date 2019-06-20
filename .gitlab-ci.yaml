@@ -1,0 +1,19 @@
+# Official docker image.
+image: docker:latest
+
+services:
+  - docker:dind
+
+before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
+
+build-master:
+  stage: build
+  script:
+    # Build Image
+    - docker build -t "$CI_REGISTRY_IMAGE" .
+    # Install test libaries and Run test
+    - docker run "$CI_REGISTRY_IMAGE" sh -c "pipenv  install --dev --system --deploy && python -m pytest"
+    # Push Image
+    - docker push "$CI_REGISTRY_IMAGE"
+

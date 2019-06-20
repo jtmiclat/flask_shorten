@@ -8,9 +8,7 @@ api = Api()
 
 from .models import UrlMapper, db
 
-url_bp = Blueprint(
-    "url", "url", url_prefix="/url", description="Url Mapping Api"
-)
+url_bp = Blueprint("url", "url", url_prefix="/url", description="Url Mapping Api")
 
 
 @api.definition("UrlMappingRequest")
@@ -26,8 +24,7 @@ class UrlMappingRequest(Schema):
         validate=[
             validate.Length(min=6, max=88),
             validate.Regexp(
-                r"[a-zA-Z0-9]*$",
-                error="Can only contain alphanumeric characters",
+                r"[a-zA-Z0-9]*$", error="Can only contain alphanumeric characters"
             ),
         ],
     )

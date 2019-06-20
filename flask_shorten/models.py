@@ -11,6 +11,7 @@ db = SQLAlchemy()
 
 class UrlMapper(db.Model):
     """URL Mapper"""
+
     __tablename__ = "url_mapper"
     id = db.Column("id", db.Integer, primary_key=True)
     url = db.Column("url", db.String, nullable=False)
@@ -28,6 +29,7 @@ class UrlMapper(db.Model):
         UUID is only 8 characters long
         """
         return ShortUUID().random(HASH_LENGTH)
+
 
 # TODO: Table for Url Uses
 # class UrlUse(db.Model):

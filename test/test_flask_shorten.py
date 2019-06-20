@@ -7,8 +7,8 @@ from flask_shorten.models import db, UrlMapper
 
 @pytest.fixture
 def app(monkeypatch):
-    monkeypatch.setattr(os, "getenv", lambda *x: "sqlite:///:memory:")
-    app = create_app()
+    monkeypatch.setenv("SQLALCHEMY_DATABASE_URI", "sqlite:///:memory:")
+    app = create_app(testing=True)
     yield app
 
 
@@ -21,7 +21,7 @@ def database(app):
         db.drop_all()
 
 
-def test_custom_path_creation(database, app):
+def test_custom_path_creation(app, database):
     client = app.test_client()
     client.post(
         "/url/",
@@ -43,7 +43,7 @@ def test_random_path_creation(database, app, monkeypatch):
     assert a.location == "http://localhosting.dev"
 
 
-def test_taken_path(database, app, monkeypatch):
+def test_taken_path(app, database, monkeypatch):
     client = app.test_client()
     client.post(
         "/url/",
@@ -56,7 +56,7 @@ def test_taken_path(database, app, monkeypatch):
     assert a.status_code == 409
 
 
-def test_no_path(database, app, monkeypatch):
+def test_no_path(app, database, monkeypatch):
     client = app.test_client()
     a = client.get("notexisting")
     assert a.status_code == 404
