@@ -22,7 +22,10 @@ services:
         ports:
             - "5000:5000"
         environment:
-            SQLALCHEMY_DATABASE_URI: 'postgresql+psycopg2://postgres:password@postgres/postgres'
+            POSTGRES_PASSWORD: password
+            POSTGRES_USER: postgres
+            POSTGRES_DATABASE: postgres
+            POSTGRES_SERVICE: postgres
         depends_on:
             - postgres
         links:

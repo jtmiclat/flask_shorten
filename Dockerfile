@@ -15,4 +15,4 @@ COPY pyproject.toml .
 
 RUN poetry install -n --no-dev
 COPY . /flask_shorten
-CMD ["poetry", "run", "gunicorn", "-w", "2", "-b", "0.0.0.0:5000", "wsgi:app", "--access-logfile", "-"]
+CMD ["poetry", "run", "gunicorn", "-w", "2", "-b", "0.0.0.0:5000", "run:app", "--access-logfile", "-"]

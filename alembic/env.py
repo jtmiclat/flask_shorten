@@ -26,7 +26,14 @@ target_metadata = None
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
-config.set_main_option('sqlalchemy.url', os.getenv("SQLALCHEMY_DATABASE_URI"))
+
+postgres_password = os.getenv("POSTGRES_PASSWORD")
+postgres_user = os.getenv("POSTGRES_USER")
+postgres_database = os.getenv("POSTGRES_DATABASE")
+postgres_service = os.getenv("POSTGRES_SERVICE")
+if postgres_password and postgres_password and postgres_service and postgres_user:
+    uri = f"postgresql+psycopg2://{postgres_user}:{postgres_password}@{postgres_service}/{postgres_database}"
+config.set_main_option('sqlalchemy.url', uri)
 def run_migrations_offline():
     """Run migrations in 'offline' mode.
 
