@@ -1,12 +1,11 @@
 from flask.views import MethodView
-from flask import request, redirect, send_from_directory
-from sqlalchemy import func
+from flask import redirect, send_from_directory
 from marshmallow import Schema, fields, validate
 from flask_rest_api import Api, Blueprint, abort
 
-api = Api()
-
 from .models import UrlMapper, db
+
+api = Api()
 
 url_bp = Blueprint("url", "url", url_prefix="/url", description="Url Mapping Api")
 
@@ -53,8 +52,8 @@ class UrlMappingQuery(Schema):
 
 def create_url_mapper(url: str, path: str = None) -> UrlMapper:
     """Creates a new url based on path.
-    
-    If path is none, generates random hash. 
+
+    If path is none, generates random hash.
     Raises an abort if path already exists in database
     """
     custom = True

@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 def set_config(app, testing=False):
     """Set up config
 
-    TODO: Move this to an config class 
+    TODO: Move this to an config class
     """
     postgres_password = os.getenv("POSTGRES_PASSWORD")
     postgres_user = os.getenv("POSTGRES_USER")
@@ -23,7 +23,16 @@ def set_config(app, testing=False):
         and postgres_service is not None
         and postgres_user is not None
     ):
-        uri = f"postgresql+psycopg2://{postgres_user}:{postgres_password}@{postgres_service}/{postgres_database}"
+        uri = (
+            "postgresql+psycopg2://"
+            + postgres_user
+            + ":"
+            + postgres_password
+            + "@"
+            + postgres_service
+            + "/"
+            + postgres_database
+        )
     else:
         uri = os.getenv("SQLALCHEMY_DATABASE_URI")
         logger.warning("Missing postgres info using ENV VAR %s", uri)
@@ -44,7 +53,7 @@ def create_app(testing=False):
     app = Flask(__name__)
     set_config(app, testing)
     db.init_app(app)
-    from .views import UrlMapping, Redirection, HomePage, api, url_bp
+    from .views import Redirection, HomePage, api, url_bp
 
     api.init_app(app)
     api.register_blueprint(url_bp)
