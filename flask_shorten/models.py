@@ -9,7 +9,7 @@ HASH_LENGTH = 8
 db = SQLAlchemy()
 
 
-class UrlMapper(db.Model):
+class UrlMapper(db.Model):  # type: ignore
     """URL Mapper"""
 
     __tablename__ = "url_mapper"
