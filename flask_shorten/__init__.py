@@ -53,7 +53,7 @@ def set_config(app, testing=False):
 
 def create_app(testing=False):
     """Create app """
-    sentry_dsn = os.getenv("SENTRU_DSN")
+    sentry_dsn = os.getenv("SENTRY_DSN")
     if sentry_dsn is not None:
         sentry_sdk.init(dsn=sentry_dsn, integrations=[FlaskIntegration()])
         logger.info("Using sentry monitoring")
