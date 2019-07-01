@@ -5,13 +5,16 @@ from flask import Flask
 
 from .models import db
 
+import sentry_sdk
+from sentry_sdk.integrations.flask import FlaskIntegration
+
 logger = logging.getLogger(__name__)
 
 
 def set_config(app, testing=False):
     """Set up config
 
-    TODO: Move this to an config class
+    UsTODO: Move this to an config class
     """
     postgres_password = os.getenv("POSTGRES_PASSWORD")
     postgres_user = os.getenv("POSTGRES_USER")
@@ -34,8 +37,8 @@ def set_config(app, testing=False):
             + postgres_database
         )
     else:
-        uri = os.getenv("SQLALCHEMY_DATABASE_URI")
-        logger.warning("Missing postgres info using ENV VAR %s", uri)
+        uri = os.getenv("SQLALCHEMY_DATABASE_URI", "sqlite://")
+        logger.warning("Missing postgres info using %s", uri)
 
     app.config["TESTING"] = testing
     app.config["SQLALCHEMY_DATABASE_URI"] = uri
@@ -50,6 +53,12 @@ def set_config(app, testing=False):
 
 def create_app(testing=False):
     """Create app """
+    sentry_dsn = os.getenv("SENTRU_DSN")
+    if sentry_dsn is not None:
+        sentry_sdk.init(dsn=sentry_dsn, integrations=[FlaskIntegration()])
+        logger.info("Using sentry monitoring")
+    else:
+        logger.warning("Found no sentry_dsn. Not using sentry")
     app = Flask(__name__)
     set_config(app, testing)
     db.init_app(app)
