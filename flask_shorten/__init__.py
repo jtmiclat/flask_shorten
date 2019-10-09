@@ -64,7 +64,7 @@ def create_app(testing=False):
     app = Flask(__name__)
     set_config(app, testing)
     if not app.config["TESTING"]:
-        Talisman(app, strict_transport_security=False)
+        Talisman(app, strict_transport_security=False, content_security_policy=False)
     db.init_app(app)
     from .views import Redirection, HomePage, api, url_bp
 
