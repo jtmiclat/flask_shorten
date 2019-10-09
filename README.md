@@ -5,6 +5,9 @@
 
 This app is deployed in Digital Ocean. App can be located at [here](https://link.jtmiclat.me/). The website was meant as an example on how deploy the app and not be used as a real service. I do not guarantee that the data will always be persisted and be accurate.
 
+### CI/CD
+Uses gitlab for CI.
+
 ## Design decisions
 
 Used postgres as an easy to use database but it might better to use something
@@ -38,6 +41,4 @@ Redirects to
 <p>You should be redirected automatically to target URL: <a href="http://jtmiclat.com">http://jtmiclat.com</a>.  If not click the link
 ```
 
-## TODO
 
-- [ ] Set up Azure Pipeline
